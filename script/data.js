@@ -29,27 +29,32 @@ btnImport.addEventListener("click", function () {
 		//xác nhận import
 		const isImport = confirm("Bạn có chắc chắn import file này?");
 		if (isImport) {
-			const file = fileInput.file[0];
+			const file = fileInput.files[0];
 			const reader = new FileReader();
+
+			reader.readAsText(file, "UTF-8");
+
 			//sự kiện load dữ liệu file lên
-			reader.addEventListener(
-				"load",
-				function () {
-					//kiểm tra cấu trúc file
-					const isValidateFile = checkFile(JSON.parse(reader.result));
-					if (isValidateFile) {
-						//lưu dữ liệu xuống localstorage
-						saveToStorage("petArr", JSON.parse(reader.result));
-						//thông báo import thành công
-						alert("Import thành công!");
-					}
-				},
-				false
-			);
+			reader.addEventListener("load", function () {
+				const fileContents = JSON.parse(reader.result);
+
+				//kiểm tra cấu trúc file
+				// Tutor: kiểm tra lại checkFile() ???
+				// const isValidateFile = checkFile(JSON.parse(reader.result));
+				console.log("Reader on loading...");
+
+				const isValidateFile = true;
+				if (isValidateFile) {
+					//lưu dữ liệu xuống localstorage
+					saveToStorage("petArr", fileContents);
+					//thông báo import thành công
+					alert("Import thành công!");
+				}
+			});
 			//đọc file
-			if (file) {
-				reader.readAsText(file);
-			}
+			// if (file) {
+			// 	reader.readAsText(file);
+			// }
 			//reset file input
 			fileInput.value = "";
 		}
