@@ -96,6 +96,7 @@ findBtn.addEventListener("click", function () {
 	if (breedInput.value !== "Select Breed") {
 		petArrFind = petArrFind.filter((pet) => pet.breed === breedInput.value);
 	}
+	// Các hộp check -> kiểm tra giá trị bằng ".checked", NOT ".value"
 	if (vaccinatedInput.checked === true) {
 		petArrFind = petArrFind.filter((pet) => pet.vaccinated === true);
 	}
